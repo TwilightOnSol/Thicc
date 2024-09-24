@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thicc App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: transparent; /* Remove background */
+            color: transparent; /* Make text transparent for gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 72px;
+            font-weight: bold;
+            position: absolute;
+            background-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text; /* Clip the background to text */
+            background-clip: text; /* Clip the background to text */
+        }
+    </style>
+</head>
+<body>
+    <div class="box">Thicc</div>
+
+    <script>
+        const box = document.querySelector('.box');
+        let position = { x: 0, y: 0 };
+        let velocity = { x: 2, y: 2 }; // Speed in both directions
+
+        function updatePosition() {
+            // Update the position
+            position.x += velocity.x;
+            position.y += velocity.y;
+
+            // Check for collision with the edges
+            if (position.x <= 0 || position.x >= window.innerWidth - 200) {
+                velocity.x *= -1; // Reverse horizontal direction
+            }
+            if (position.y <= 0 || position.y >= window.innerHeight - 200) {
+                velocity.y *= -1; // Reverse vertical direction
+            }
+
+            // Apply the new position
+            box.style.left = `${position.x}px`;
+            box.style.top = `${position.y}px`;
+
+            requestAnimationFrame(updatePosition); // Keep updating
+        }
+
+        // Initialize random starting position
+        function setRandomStartPosition() {
+            position.x = Math.random() * (window.innerWidth - 200);
+            position.y = Math.random() * (window.innerHeight - 200);
+            box.style.left = `${position.x}px`;
+            box.style.top = `${position.y}px`;
+        }
+
+        window.addEventListener('load', () => {
+            setRandomStartPosition();
+            updatePosition();
+        });
+        window.addEventListener('resize', setRandomStartPosition);
+    </script>
+</body>
+</html>
